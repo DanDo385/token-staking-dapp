@@ -8,7 +8,7 @@ library address {
     }
 
     function sendValue(address payable recipient, uint256 amount) internal {
-        require(address(this).balance >= amount, "Address has insuffient balance");
+        require(address(this).balance >= amount, "Address: insuffient balance");
         (bool success, ) = recipient.call{value: amount}("");
         require(success, "Address unable to send value, recipient may have reverted");
     }
@@ -19,5 +19,26 @@ library address {
 
     function functionCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
         return functionCallWithValue(target, data, 0, errorMessage);
+    }
+
+    function functionCallWithValue(address target, bytes memory data, uint256 value) internal returns (bytes memory) {
+        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
+    }
+
+    function functionCallWithValue(address target, bytes memory data, uint256 value, string memory errorMessage) internal returns (bytes memory) {
+        require(address(this).balance >= value, "Address: insufficient balance for call");
+        require(isContract(target), "Address: call to non-contact";
+        (bool success, bytes memory returndata) = target.call{value: value}(data);
+        return verifyCallResult(success, returndata, errorMessage);
+    }
+
+    function staticCall(address target, bytes memory data) internal view returns (bytes memory) {
+        return functionStaticCall(target, data, "Address: low-level static call failed");
+    }
+
+    function functionStaticCall(address target, bytes memory data, string memory errorMessage) internal view returns (bytes memory) {
+        require(isContract(target), "Address: static call to non-contract");
+        (bool success, bytes memory returndata) = target.staticCall(data);
+        return verifyCallResult(success, returndata, errorMessage);
     }
 }
