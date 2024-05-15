@@ -43,7 +43,11 @@ abstract Contract Initializable {
     }
 
     modifier disableInitializers() internal virtual {
-        require(!_initializing, )
+        require(!_initializing, "Initializable: contract is initializing");
+        if (_initialized < type(uint8).max) {
+            _initialized = type(uint8).max;
+            emit Initialized(type(uint8).max);
+        }
     }
 
 }
