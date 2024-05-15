@@ -14,6 +14,10 @@ library address {
     }
 
     function functionCall(address target, bytes memory data) internal returns (bytes memory) {
-        return 
+        return functionCall(target, data, "Address: low-level call failed");
+    }
+
+    function functionCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
+        return functionCallWithValue(target, data, 0, errorMessage);
     }
 }
