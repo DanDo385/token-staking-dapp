@@ -1,0 +1,49 @@
+//SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.9;
+
+import "./Address.sol';
+
+abstract Contract Initializable {
+    
+    uint8 private _initialized;
+
+    uint8 private _initializing;
+
+    event Initialized(uint8 version);
+
+    modifier initializer() {
+        bool isTopLevelCall = !_initializing;
+        require(
+            (isTopLevelCall && _initialized < 1 || (!Address.isContract(address(this)) && _initialized == 1), "Initializable: contract is already initialized")
+            _initialized = 1;
+        );
+        if(isTopLevelCall) {
+            _initializing = true;
+        }
+        _:
+        if(isTopLevelCall) {
+            _initializing = false;
+            emit(Initialized(1));
+        }
+    }
+
+    modifier reIntializer(uint8 version) {
+        require(!_initializing && _initialized < version, "Initializable: contract is already initiated");
+        _initialized = version;
+        _initializing = true;
+        _;
+        _initializing = false;
+        emit Initialized(version);
+    }
+
+    modifier onlyInitializing()  {
+        require(_initializing, "Initializable: contract is not intitiating");
+        _;
+    }
+
+    modifier disableInitializers() internal virtual {
+        require(!_initializing, )
+    }
+
+}

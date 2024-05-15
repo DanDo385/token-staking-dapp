@@ -41,4 +41,28 @@ library address {
         (bool success, bytes memory returndata) = target.staticCall(data);
         return verifyCallResult(success, returndata, errorMessage);
     }
+
+    function functioDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
+        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
+    }
+
+    function functionDelegateCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
+        require(isContract(target), "Address: delegate call to non-contact");
+        return verifyCallResult(success, returndata, errorMessage);
+    }
+
+    function verifyCallResult(bool success, bytes memory returndata, string memory errorMessage) internal pure returns (bytes memory) {
+        if (success) {
+            return returndata;
+        } else {
+            if(returndata.length > 0) {
+                assembly {
+                    let returndata_size := mload(returndata)
+                    revert(add(32, returndata), returndata_size)
+                } else {
+                revert(errorMessage);
+                }
+            }
+        }
+    }
 }
