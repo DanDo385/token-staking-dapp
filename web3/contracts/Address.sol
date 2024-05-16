@@ -32,7 +32,7 @@ library Address {
         return verifyCallResult(success, returndata, errorMessage);
     }
 
-    function staticCall(address target, bytes memory data) internal view returns (bytes memory) {
+    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
         return functionStaticCall(target, data, "Address: low-level static call failed");
     }
 
