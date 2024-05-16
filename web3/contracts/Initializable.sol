@@ -4,11 +4,11 @@ pragma solidity ^0.8.9;
 
 import "./Address.sol';
 
-abstract Contract Initializable {
+abstract contract Initializable {
     
     uint8 private _initialized;
 
-    uint8 private _initializing;
+    bool private _initializing;
 
     event Initialized(uint8 version);
 
