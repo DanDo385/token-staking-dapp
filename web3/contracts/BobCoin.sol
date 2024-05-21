@@ -8,7 +8,7 @@ contract BobCoin {
     string public standard = "BobCoin v0.1";
     uint256 public totalSupply;
     address public ownerOfContract;
-    uint256 public _userId;
+    uint256 public _u serId;
 
     uint256 constant initialSupply = 1000000 * (10**18);
 
